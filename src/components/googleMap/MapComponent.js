@@ -1,28 +1,32 @@
 import React from 'react';
+import MapView, { Marker } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import config from 'src/utils/config';
 
-const MapComponent = ({ origin, destination, directions }) => {
+const MapComponent = ({ currentLocation, destination }) => {
   return (
     <MapView
       style={StyleSheet.absoluteFill}
-      initialRegion={{
-        latitude: origin.latitude,
-        longitude: origin.longitude,
-        latitudeDelta: 5,
-        longitudeDelta: 5,
+      region={{
+        latitude: currentLocation.latitude || 31.4300,
+        longitude: currentLocation.longitude || 74.2509,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
       }}
     >
-      <Marker coordinate={origin} title="Origin" description="Starting Point" pinColor="green" />
-      <Marker
-        coordinate={destination}
-        title="Destination"
-        description="Ending Point"
-        pinColor="red"
-      />
-
-      {directions.length > 0 && (
-        <Polyline coordinates={directions} strokeWidth={4} strokeColor="#007AFF" />
+      {currentLocation && (
+        <Marker coordinate={currentLocation} title="Current Location" pinColor="blue" />
+      )}
+      {destination && <Marker coordinate={destination} title="Destination" pinColor="red" />}
+      {currentLocation && destination && (
+        <MapViewDirections
+          origin={currentLocation}
+          destination={destination}
+          apikey={config.googleMapsApiKey}
+          strokeWidth={4}
+          strokeColor="#007AFF"
+        />
       )}
     </MapView>
   );
