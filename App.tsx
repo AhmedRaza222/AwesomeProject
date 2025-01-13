@@ -1,11 +1,12 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
-import MapScreen from 'src/screens/MapScreen';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <MapScreen />
+      {/* <MapScreen /> */}
+      <Text>Hi</Text>
+      
     </SafeAreaView>
   );
 };
